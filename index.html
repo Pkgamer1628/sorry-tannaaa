@@ -11,7 +11,7 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #ffd9ec, #fff5f8);
       color: #3a3a3a;
-      overflow: hidden;
+      overflow-x: hidden;
     }
     .container {
       max-width: 800px;
@@ -30,13 +30,13 @@
       margin-bottom: 20px;
       color: #e91e63;
     }
-    .letter {
+    .letter, .description {
       display: none;
       font-size: 1.2em;
       line-height: 1.8em;
       animation: slideUp 1s ease forwards;
     }
-    .letter.active {
+    .letter.active, .description.active {
       display: block;
     }
     .nav-buttons {
@@ -96,6 +96,23 @@
       from {opacity: 0; transform: translateY(20px);}
       to {opacity: 1; transform: translateY(0);}
     }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 20px;
+    }
+    .tabs button {
+      padding: 10px 20px;
+      background: #ffd1dc;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .tabs button.active {
+      background: #ff5e94;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -103,57 +120,101 @@
   <div class="container">
     <h1>To My Tanna 💕</h1>
 
-    <div class="letter active">
-      <p>My sweet Tanna,</p>
-      <p>I know we’ve been distant, but not a day goes by without thinking of you. You’re in my breath, my heart, my soul.</p>
+    <div class="tabs">
+      <button onclick="switchSection('letters')" class="active" id="btn-letters">Apology Letters</button>
+      <button onclick="switchSection('descriptions')" id="btn-descriptions">About My Tanna</button>
     </div>
 
-    <div class="letter">
-      <p>Every moment we shared is a treasure. Your laughter, your voice, even your silence—it echoes in my mind every night.</p>
+    <div id="letters-section">
+      <div class="letter active">
+        <p>My sweet Tanna,</p>
+        <p>I know we’ve been distant, but not a day goes by without thinking of you. You’re in my breath, my heart, my soul.</p>
+      </div>
+
+      <div class="letter">
+        <p>Every moment we shared is a treasure. Your laughter, your voice, even your silence—it echoes in my mind every night.</p>
+      </div>
+
+      <div class="letter">
+        <p>I waited for 3 years because I knew you were worth it. I still believe in us. No distance can erase what I feel for you.</p>
+      </div>
+
+      <div class="letter">
+        <p>I miss you in ways words can’t describe. I miss your chaos, your calm, your everything. You are home to my heart.</p>
+      </div>
+
+      <div class="letter">
+        <p>This isn’t just a website, it’s a letter from my soul to yours. Please forgive me, Tanna. Let’s write our next chapter—together.</p>
+        <p>Yours forever,<br><strong>Pranu 💗</strong></p>
+      </div>
     </div>
 
-    <div class="letter">
-      <p>I waited for 3 years because I knew you were worth it. I still believe in us. No distance can erase what I feel for you.</p>
-    </div>
+    <div id="descriptions-section" style="display: none;">
+      <div class="description active">
+        <p>Tanna, you are the sunrise to my every morning. The one who brightens my days, even when skies are gray.</p>
+      </div>
 
-    <div class="letter">
-      <p>I miss you in ways words can’t describe. I miss your chaos, your calm, your everything. You are home to my heart.</p>
-    </div>
+      <div class="description">
+        <p>Your laugh is my favorite melody. Your smile—my daily peace. Even in silence, you're the loudest echo in my heart.</p>
+      </div>
 
-    <div class="letter">
-      <p>This isn’t just a website, it’s a letter from my soul to yours. Please forgive me, Tanna. Let’s write our next chapter—together.</p>
-      <p>Yours forever,<br><strong>Pranu 💗</strong></p>
+      <div class="description">
+        <p>You are strong, kind, beautiful, and endlessly magical. My heart beats softer when you’re near, even in thoughts.</p>
+      </div>
+
+      <div class="description">
+        <p>I will always admire your courage, your love, your existence. There’s no one like you, and there never will be.</p>
+      </div>
+
+      <div class="description">
+        <p>More than words, you are a feeling I never want to lose. Thank you for being you, my one and only Tanna 💘</p>
+      </div>
     </div>
 
     <div class="nav-buttons">
-      <button onclick="prevLetter()">← Previous</button>
-      <button onclick="nextLetter()">Next →</button>
+      <button onclick="prevSlide()">← Previous</button>
+      <button onclick="nextSlide()">Next →</button>
     </div>
 
     <div class="big-heart">❤</div>
   </div>
 
   <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2023/04/18/audio_e9d00521a1.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/audio/2023/03/10/audio_d0d77ecb18.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
     const letters = document.querySelectorAll('.letter');
-    let current = 0;
+    const descriptions = document.querySelectorAll('.description');
+    let currentIndex = 0;
+    let currentSection = 'letters';
 
-    function showLetter(index) {
-      letters.forEach((l, i) => l.classList.toggle('active', i === index));
+    function showSlide(index) {
+      const slides = currentSection === 'letters' ? letters : descriptions;
+      slides.forEach((el, i) => el.classList.toggle('active', i === index));
     }
 
-    function nextLetter() {
-      current = (current + 1) % letters.length;
-      showLetter(current);
+    function nextSlide() {
+      const slides = currentSection === 'letters' ? letters : descriptions;
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
     }
 
-    function prevLetter() {
-      current = (current - 1 + letters.length) % letters.length;
-      showLetter(current);
+    function prevSlide() {
+      const slides = currentSection === 'letters' ? letters : descriptions;
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    function switchSection(section) {
+      currentSection = section;
+      currentIndex = 0;
+      document.getElementById('letters-section').style.display = section === 'letters' ? 'block' : 'none';
+      document.getElementById('descriptions-section').style.display = section === 'descriptions' ? 'block' : 'none';
+      document.getElementById('btn-letters').classList.toggle('active', section === 'letters');
+      document.getElementById('btn-descriptions').classList.toggle('active', section === 'descriptions');
+      showSlide(currentIndex);
     }
 
     function createHearts() {
@@ -170,3 +231,4 @@
   </script>
 </body>
 </html>
+
