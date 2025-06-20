@@ -71,6 +71,18 @@
       animation: float 10s linear infinite;
       opacity: 0.6;
     }
+    .big-heart {
+      text-align: center;
+      font-size: 6em;
+      color: #ff3e6c;
+      margin-top: 20px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
     @keyframes float {
       0% {transform: translateY(100vh) rotate(0); opacity: 0;}
       50% {opacity: 1;}
@@ -117,10 +129,12 @@
       <button onclick="prevLetter()">← Previous</button>
       <button onclick="nextLetter()">Next →</button>
     </div>
+
+    <div class="big-heart">❤</div>
   </div>
 
   <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_222a99f24e.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/audio/2023/04/18/audio_e9d00521a1.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
